@@ -200,7 +200,6 @@ impl WasmtimeFragmentInvoker {
     pub fn new() -> anyhow::Result<Self> {
         let mut config = wasmtime::Config::new();
         config.wasm_component_model(true);
-        config.async_support(true);
         let engine = Engine::new(&config)?;
         Ok(Self {
             engine,

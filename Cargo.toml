@@ -1,12 +1,12 @@
 [package]
 name = "greentic-gui"
-version = "0.4.8"
+version = "0.4.9"
 edition = "2024"
 description = "Greentic GUI runtime (Axum-based) that serves tenant packs, enforces auth, and exposes worker/session APIs plus a browser SDK."
 license = "MIT"
 homepage = "https://greentic.ai"
-repository = "https://github.com/greentic-ai/greentic-gui"
-documentation = "https://github.com/greentic-ai/greentic-gui"
+repository = "https://github.com/greenticai/greentic-gui"
+documentation = "https://github.com/greenticai/greentic-gui"
 readme = "README.md"
 keywords = ["greentic", "gui", "axum", "runtime", "wasm"]
 exclude = [
@@ -77,11 +77,11 @@ greentic-interfaces-guest = { version = "0.4", default-features = false, feature
 greentic-interfaces-wasmtime = { version = "0.4", default-features = false }
 greentic-oauth-sdk = "0.4"
 greentic-oauth-client = "0.4"
-reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "stream"] }
 tokio-stream = "0.1"
 flate2 = "1"
 tar = "0.4"
-wasmtime = { version = "41", features = ["component-model", "async"] }
+wasmtime = { version = "42", features = ["component-model", "async"] }
 base64 = "0.22"
 ciborium = "0.2"
 semver = "1"
@@ -92,14 +92,14 @@ tower = "0.5"
 tower-http = { version = "0.6", features = ["trace", "compression-br", "compression-deflate", "compression-gzip", "cors", "set-header"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
-serde_with = "3.9"
+serde_with = "3"
 thiserror = "2"
 uuid = { version = "1", features = ["v4"] }
 tempfile = "3"
 kuchiki = "0"
 regex = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
-greentic-interfaces-host = { version = "0.4.54", default-features = false, features = ["worker-v1", "gui-fragment"] }
+greentic-interfaces-host = { version = "0.4", default-features = false, features = ["worker-v1", "gui-fragment"] }
 url = "2"
 greentic-config = "0.4"
 greentic-config-types = "0.4"
