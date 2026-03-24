@@ -1,34 +1,37 @@
 # Security Fix Report
 
-Date: 2026-03-24 (UTC)
+Date (UTC): 2026-03-24
 Repository: `/home/runner/work/greentic-gui/greentic-gui`
-Branch: `chore/cleanup-ds-store`
+Reviewer Role: CI Security Reviewer
 
-## Input Alerts Reviewed
-- Dependabot alerts: `0`
-- Code scanning alerts: `0`
+## Input Alerts Review
+- Dependabot alerts provided: `0`
+- Code scanning alerts provided: `0`
 - New PR dependency vulnerabilities provided: `0`
 
-## PR Dependency Review
-Checked dependency manifests and lockfiles present in repo:
+Result: No reported vulnerabilities required remediation.
+
+## PR Dependency-Change Verification
+Checked for dependency manifest or lockfile changes in this PR compared to `origin/main`:
 - `package.json`
 - `package-lock.json`
 - `Cargo.toml`
 - `Cargo.lock`
 
-Compared PR branch against `origin/main` for dependency files:
-- `git diff origin/main...HEAD -- package.json package-lock.json Cargo.toml Cargo.lock`
-- Result: **no dependency-file changes in this PR**.
+Command used:
+- `git diff --name-only origin/main...HEAD -- package.json package-lock.json Cargo.toml Cargo.lock`
 
-## Additional Verification Attempted
-- Ran `npm audit --json`:
-  - Failed due to CI/network DNS restriction (`EAI_AGAIN registry.npmjs.org`).
-- Ran `cargo audit -q`:
-  - Failed in sandbox due to rustup temp-file/channel-sync restriction (read-only rustup path).
+Result: No dependency-file changes detected in PR range, so no new dependency vulnerabilities were introduced by this PR.
+
+## Additional Audit Attempts (Environment-Limited)
+- `npm audit --audit-level=high --json` failed due to network resolution error (`EAI_AGAIN registry.npmjs.org`) in this CI sandbox.
+- `cargo audit --json` failed because rustup could not create temp files under `/home/runner/.rustup` (read-only filesystem in this environment).
+
+These failures are environmental and do not indicate a vulnerability in repository code.
 
 ## Remediation Actions
-- No actionable vulnerabilities were identified from the provided alerts or PR dependency diff.
-- No code or dependency changes were required for remediation.
+- No code or dependency changes were required.
+- No security patches were applied because no actionable vulnerabilities were present in the provided alerts or PR dependency delta.
 
-## Outcome
-- Security posture for this PR (based on provided alerts and dependency-diff analysis): **no new vulnerabilities detected**.
+## Files Modified
+- `SECURITY_FIX_REPORT.md` (added)
