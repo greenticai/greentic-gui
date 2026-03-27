@@ -1,33 +1,33 @@
 # Security Fix Report
 
-Date (UTC): 2026-03-26
-Role: CI Security Reviewer
+Date: 2026-03-27 (UTC)
+Branch: `chore/shared-codex-security-fix`
 
 ## Inputs Reviewed
-- Dependabot alerts: `0`
-- Code scanning alerts: `0`
-- New PR dependency vulnerabilities: `0`
+
+- Security alerts JSON:
+  - `dependabot`: `[]`
+  - `code_scanning`: `[]`
+- New PR Dependency Vulnerabilities: `[]`
 
 ## PR Dependency Change Review
-Dependency manifest/lock files detected in repository:
-- `package.json`
-- `package-lock.json`
-- `Cargo.toml`
-- `Cargo.lock`
 
-Findings:
-- No dependency manifest or lockfile changes detected in the current working tree.
-- Latest commit diff (`HEAD~1..HEAD`) changes only:
-  - `.github/workflows/ci.yml`
-- No new dependency vulnerabilities were provided by CI input.
+Compared `HEAD` against `origin/main`:
+
+- Changed files in PR:
+  - `.github/workflows/codex-security-fix.yml`
+
+Dependency manifest / lockfiles present in repository were identified (`package.json`, `package-lock.json`, `Cargo.toml`, `Cargo.lock`) and none were changed by this PR.
 
 ## Remediation Actions Taken
-- No code or dependency remediation was required because no vulnerabilities were reported.
-- No dependency upgrades were applied.
 
-## Notes
-- Attempted to fetch `origin/main` for a full base-branch diff, but CI sandbox disallowed updating `.git/FETCH_HEAD` (read-only restriction). Review was completed using available local commit history and provided CI vulnerability inputs.
+- No vulnerabilities were detected from provided alert feeds.
+- No new PR dependency vulnerabilities were reported.
+- No dependency file changes in the PR introduced new vulnerable packages.
+- No code or dependency modifications were required for remediation.
 
 ## Final Status
-- Vulnerabilities requiring remediation: `none`
-- Security fixes applied: `none`
+
+- Vulnerabilities remediated: `0`
+- Residual known vulnerabilities from provided inputs: `0`
+- Repository changes made by this review: `SECURITY_FIX_REPORT.md` only.
