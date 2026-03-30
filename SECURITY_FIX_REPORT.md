@@ -1,35 +1,36 @@
 # SECURITY_FIX_REPORT
 
-## Scope
-- CI security review for current workspace at `/home/runner/work/greentic-gui/greentic-gui`.
-- Inputs provided:
-  - `dependabot`: `[]`
-  - `code_scanning`: `[]`
+## Review Context
+- Date (UTC): 2026-03-30
+- Repository: `/home/runner/work/greentic-gui/greentic-gui`
+- Provided alert inputs:
+  - Dependabot alerts: `[]`
+  - Code scanning alerts: `[]`
   - New PR dependency vulnerabilities: `[]`
 
-## What I Checked
-1. Located dependency manifests/locks in repo:
+## Security Analysis Performed
+1. Identified dependency manifests/lockfiles in repo:
    - `package.json`
    - `package-lock.json`
+   - `Cargo.toml`
    - `Cargo.lock`
-2. Checked PR-local dependency-file diffs:
-   - `git diff -- package.json package-lock.json Cargo.lock`
-   - Result: no changes detected.
-3. Attempted dependency audit tooling:
-   - `npm audit --json` failed due to CI DNS/network restriction (`EAI_AGAIN registry.npmjs.org`).
-   - `cargo audit -q` failed due rustup temp-path sandbox restriction (`/home/runner/.rustup/tmp` read-only).
-4. Performed offline sanity scan of lockfiles for common high-risk vulnerable version signatures.
-   - No matches found in `package-lock.json`, `Cargo.lock`, or `package.json`.
+2. Checked for PR-local changes in dependency files:
+   - Command: `git diff --name-only -- package.json package-lock.json Cargo.toml Cargo.lock`
+   - Result: no changed dependency files in this PR workspace.
+3. Attempted live vulnerability audit tools:
+   - `npm audit --json` -> failed due DNS/network restriction in CI (`EAI_AGAIN registry.npmjs.org`).
+   - `cargo audit -q` -> failed in sandbox due rustup temp path being read-only (`/home/runner/.rustup/tmp`).
 
 ## Findings
-- No security alerts were provided by Dependabot or code scanning.
-- No new PR dependency vulnerabilities were provided.
-- No dependency file changes were introduced in this workspace.
-- No actionable vulnerability remediations were required.
+- No incoming security alerts to remediate.
+- No new PR dependency vulnerabilities reported.
+- No dependency-file modifications introduced by this PR snapshot.
+- No evidence of newly introduced dependency vulnerabilities from available CI data.
 
-## Fixes Applied
-- None. Minimal safe remediation in this case is no code/dependency change.
+## Remediation Actions
+- No code or dependency changes were applied.
+- Minimal safe fix in this case is to keep dependency state unchanged.
 
-## Residual Risk / Notes
-- Network-restricted CI prevented live advisory resolution (`npm audit`) and rust audit DB usage (`cargo audit`).
-- Given zero incoming alerts and no dependency diff, there is no evidence of newly introduced vulnerabilities in this PR snapshot.
+## Notes / Residual Risk
+- Live advisory lookups were blocked by CI environment restrictions.
+- Given empty alert feeds and no dependency diffs, no actionable remediation was identified.
