@@ -1,6 +1,6 @@
 [package]
 name = "greentic-gui"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2024"
 description = "Greentic GUI runtime (Axum-based) that serves tenant packs, enforces auth, and exposes worker/session APIs plus a browser SDK."
 license = "MIT"
@@ -107,7 +107,7 @@ greentic-config = ">=0.5.0-0, <0.6.0-0"
 greentic-config-types = ">=0.5.0-0, <0.6.0-0"
 zip = "8"
 clap = { version = "4", features = ["derive"] }
-toml = "0.9"
+toml = "1"
 
 [dev-dependencies]
 axum = { version = "0.8", features = ["macros", "json"] }
