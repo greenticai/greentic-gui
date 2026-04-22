@@ -9,6 +9,7 @@ const bundlePath = join(projectRoot, "assets", "gui-sdk.js");
 function canFallback(err) {
   const msg = String((err && err.message) || "");
   return (
+    msg.includes("Cannot find module 'esbuild'") ||
     msg.includes("another platform") ||
     msg.includes("Exec format error") ||
     msg.includes("spawn") ||
