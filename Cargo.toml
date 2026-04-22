@@ -1,6 +1,6 @@
 [package]
 name = "greentic-gui"
-version = "0.4.11"
+version = "0.5.1"
 edition = "2024"
 description = "Greentic GUI runtime (Axum-based) that serves tenant packs, enforces auth, and exposes worker/session APIs plus a browser SDK."
 license = "MIT"
@@ -71,14 +71,14 @@ async-trait = "0.1"
 axum = { version = "0.8", features = ["macros", "json"] }
 http = "1"
 hyper = { version = "1.8", features = ["full"] }
-greentic-session = { version = "0.4.1", default-features = true, features = ["interfaces", "redis"] }
-greentic-telemetry = "0.4"
-greentic-types = "0.4"
-greentic-distributor-client = { version = "0.4", features = ["http-runtime"] }
-greentic-interfaces-guest = { version = "0.4", default-features = false, features = ["gui-fragment"] }
-greentic-interfaces-wasmtime = { version = "0.4", default-features = false }
-greentic-oauth-sdk = "0.4"
-greentic-oauth-client = "0.4"
+greentic-session = { version = ">=0.5.0-0, <0.6.0-0", default-features = true, features = ["interfaces", "redis"] }
+greentic-telemetry = ">=0.5.0-0, <0.6.0-0"
+greentic-types = ">=0.5.0-0, <0.6.0-0"
+greentic-distributor-client = { version = ">=0.5.0-0, <0.6.0-0", features = ["http-runtime"] }
+greentic-interfaces-guest = { version = ">=0.5.0-0, <0.6.0-0", default-features = false, features = ["gui-fragment"] }
+greentic-interfaces-wasmtime = { version = ">=0.5.0-0, <0.6.0-0", default-features = false }
+greentic-oauth-sdk = ">=0.5.0-0, <0.6.0-0"
+greentic-oauth-client = ">=0.5.0-0, <0.6.0-0"
 reqwest = { version = "0.13", default-features = false, features = ["rustls", "stream"] }
 tokio-stream = "0.1"
 flate2 = "1"
@@ -101,13 +101,13 @@ tempfile = "3"
 kuchiki = "0"
 regex = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
-greentic-interfaces-host = { version = "0.4", default-features = false, features = ["worker-v1", "gui-fragment"] }
+greentic-interfaces-host = { version = ">=0.5.0-0, <0.6.0-0", default-features = false, features = ["worker-v1", "gui-fragment"] }
 url = "2"
-greentic-config = "0.4"
-greentic-config-types = "0.4"
+greentic-config = ">=0.5.0-0, <0.6.0-0"
+greentic-config-types = ">=0.5.0-0, <0.6.0-0"
 zip = "8"
 clap = { version = "4", features = ["derive"] }
-toml = "0.9"
+toml = "1"
 
 [dev-dependencies]
 axum = { version = "0.8", features = ["macros", "json"] }
