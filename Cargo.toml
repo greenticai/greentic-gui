@@ -1,6 +1,6 @@
 [package]
 name = "greentic-gui"
-version = "0.5.1"
+version = "0.5.2"
 edition = "2024"
 description = "Greentic GUI runtime (Axum-based) that serves tenant packs, enforces auth, and exposes worker/session APIs plus a browser SDK."
 license = "MIT"
@@ -27,7 +27,7 @@ exclude = [
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/{ name }-v{ version }-{ target }.tgz"
 pkg-fmt = "tgz"
-bin-dir = "{ bin }{ binary-ext }"
+bin-dir = "{ name }-v{ version }-{ target }/{ bin }{ binary-ext }"
 
 [workspace]
 members = ["."]
