@@ -1617,7 +1617,7 @@ dependencies = [
  "camino",
  "directories",
  "greentic-config-types",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "once_cell",
  "serde",
  "serde_json",
@@ -1633,7 +1633,7 @@ version = "1.1.0-dev.25478178810"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6712a75d262243c7ee9bc7b974d4468b32b6ffc84123832fb8559fbd8e093109"
 dependencies = [
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "serde",
  "serde_json",
  "toml 1.1.2+spec-1.1.0",
@@ -1642,9 +1642,9 @@ dependencies = [
 
 [[package]]
 name = "greentic-distributor-client"
-version = "1.1.0-dev.25483347672"
+version = "1.1.0-dev.25537586660"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "71c1977d15033c5eac71bac3f2d9ca4481373a626a67df457d5338d71b2956f6"
+checksum = "7eca60a00e35c61d1d6cf98435be3f7a78f3a06d450ad8ec7d15fb2a010b8019"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1653,7 +1653,7 @@ dependencies = [
  "greentic-config-types",
  "greentic-interfaces-guest",
  "greentic-secrets-lib",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "oci-distribution",
  "reqwest 0.13.3",
  "rpassword",
@@ -1687,7 +1687,7 @@ dependencies = [
  "greentic-oauth-sdk",
  "greentic-session",
  "greentic-telemetry 1.1.0-dev.25375809033",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "http",
  "hyper",
  "kuchiki",
@@ -1721,7 +1721,7 @@ checksum = "0dd1739e0b520fcf8eeb706094e288572a821572a94bdfb10e7c5a68099f9db4"
 dependencies = [
  "anyhow",
  "constant_time_eq",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "semver",
  "thiserror 2.0.18",
  "time",
@@ -1738,7 +1738,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31869558530be66ec330013f12e47514d15b8c987c45f72b814c99864d88b833"
 dependencies = [
  "greentic-interfaces",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "wit-bindgen 0.57.1",
  "wit-bindgen-core 0.57.1",
  "wit-bindgen-rust 0.57.1",
@@ -1751,7 +1751,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "506adea7c852aca856d14ffef4398de6ada479d1c1340dabfffa528fa580ccc1"
 dependencies = [
  "greentic-interfaces",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "serde",
  "serde_json",
  "wasmtime",
@@ -1799,7 +1799,7 @@ dependencies = [
  "dashmap",
  "futures-util",
  "greentic-config-types",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "jsonwebtoken",
  "openidconnect",
  "rand 0.10.1",
@@ -1823,7 +1823,7 @@ dependencies = [
  "greentic-interfaces-host",
  "greentic-interfaces-wasmtime",
  "greentic-oauth-core",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "serde",
  "serde_json",
  "thiserror 2.0.18",
@@ -1842,7 +1842,7 @@ dependencies = [
  "futures-util",
  "greentic-oauth-core",
  "greentic-oauth-host",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "http",
  "jsonwebtoken",
  "reqwest 0.13.3",
@@ -1945,7 +1945,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d48f747c12030322701a30878bab74fa88c3a583d9f1681903d81f1d674122e"
 dependencies = [
  "greentic-interfaces",
- "greentic-types 1.1.0-dev.25376259391",
+ "greentic-types 1.1.0-dev.25540461571",
  "hex",
  "parking_lot",
  "redis",
@@ -2029,9 +2029,9 @@ dependencies = [
 
 [[package]]
 name = "greentic-types"
-version = "1.1.0-dev.25376259391"
+version = "1.1.0-dev.25540461571"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20f2d79fd4554b6985d5fd529c88884dec49985c14846bf10b43c9a58ee16e1e"
+checksum = "df38b70a9539e751664e0c3e0a21d6b9ea48e5345d9089d16c5058f122055d30"
 dependencies = [
  "anyhow",
  "blake3",
@@ -2040,7 +2040,7 @@ dependencies = [
  "constant_time_eq",
  "fnv",
  "greentic-telemetry 1.1.0-dev.25375809033",
- "greentic-types-macros 1.1.0-dev.25376259391",
+ "greentic-types-macros 1.1.0-dev.25540461571",
  "indexmap 2.14.0",
  "opentelemetry-otlp",
  "schemars 1.2.1",
@@ -2071,9 +2071,9 @@ dependencies = [
 
 [[package]]
 name = "greentic-types-macros"
-version = "1.1.0-dev.25376259391"
+version = "1.1.0-dev.25540461571"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24ab32ec792f065ae49642c15783cd7f513710308f53abf846c8c2f735e9a391"
+checksum = "1b93ebc2d47f7a87e459b9ea80fe9b50d355864c439c9ec6b0b0b3bd02363ac3"
 dependencies = [
  "proc-macro2",
  "quote",
