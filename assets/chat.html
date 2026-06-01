@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Greentic GUI · Chat</title>
+  <link rel="icon" href="data:," />
   <style>
     :root { --brand:#16a34a; --bg:#0b1220; --panel:#0f172a; --line:#1e293b; }
     html,body { height:100%; margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e2e8f0; }
@@ -19,6 +20,7 @@
     .user .bubble { background:var(--brand); color:#04140a; border-bottom-right-radius:4px; }
     .bot  .bubble { background:#fff; color:#0b1220; border-bottom-left-radius:4px; }
     .card { background:#fff; color:#0b1220; border-radius:12px; padding:6px 10px; max-width:560px; }
+    .note .bubble { background:#1e293b; color:#94a3b8; font-size:13px; }
     .err .bubble { background:#7f1d1d; color:#fee2e2; }
     form { display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--line); background:var(--panel); }
     input { flex:1; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:#0b1220; color:#e2e8f0; font-size:14px; }
@@ -30,7 +32,7 @@
     <header>
       <span class="dot"></span>
       <h1>Greentic GUI · Chat</h1>
-      <span class="meta" id="meta">new deployment model · via greentic-gui worker gateway</span>
+      <span class="meta">new deployment model · via greentic-gui worker gateway</span>
     </header>
     <div id="log"></div>
     <form id="composer" autocomplete="off">
@@ -39,9 +41,16 @@
     </form>
   </div>
 
-  <script src="/greentic/gui-sdk.js"></script>
+  <!-- Posts straight to greentic-gui's worker gateway. No /api/gui/config fetch
+       (the chat needs no tenant GUI pack), so a pack-less env stays quiet. -->
   <script src="/adaptivecards.min.js"></script>
   <script>
+    const WORKER_URL = '/api/gui/worker/message';
+    // A stable session id per page load keys the runtime's flow pause/resume,
+    // so a paused menu node resumes on the next click and card buttons navigate.
+    // A page refresh mints a new session → a fresh menu.
+    const SESSION_ID = 'web-' + (self.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36));
+    const USER_ID = 'web-user';
     const log = document.getElementById('log');
     const input = document.getElementById('input');
 
@@ -57,7 +66,6 @@
         ac.onExecuteAction = (action) => {
           const name = action.getJsonTypeName ? action.getJsonTypeName() : '';
           if (name === 'Action.OpenUrl' && action.url) { window.open(action.url, '_blank'); return; }
-          // Action.Submit (and friends): forward the action data as the worker payload.
           const data = action.data || {};
           const label = data.text || action.title || JSON.stringify(data);
           bubble('user', String(label));
@@ -81,16 +89,32 @@
       }
     }
 
-    // payload is sent verbatim to the runtime (a `text` field becomes a chat
-    // message; anything else routes to the bundle's entry flow).
+    // Post payload to the gui worker gateway (forwarded to the runtime's
+    // /workers/invoke). A `text` field becomes a chat message; a card
+    // Action.Submit's data (e.g. {action:"about_card"}) routes the flow. The
+    // session_id keys flow pause/resume so buttons navigate across turns.
     async function send(payload) {
       try {
-        const resp = await window.GreenticGUI.sendWorkerMessage({ workerId: 'chat', payload });
-        renderMessages(resp);
+        const res = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            worker_id: 'chat',
+            payload,
+            context: { session_id: SESSION_ID, user_id: USER_ID },
+          }),
+        });
+        if (!res.ok) {
+          const body = await res.text();
+          const hint = res.status === 500 ? ' — is a bundle deployed? Try: gtc op deploy --bundle <file> --bundle-id quickstart' : '';
+          const r = row('err'); const b = document.createElement('div'); b.className = 'bubble';
+          b.textContent = `⚠️ HTTP ${res.status}: ${body.slice(0, 200)}${hint}`; r.appendChild(b); scroll();
+          return;
+        }
+        renderMessages(await res.json());
       } catch (e) {
         const r = row('err'); const b = document.createElement('div'); b.className = 'bubble';
-        b.textContent = '⚠️ ' + e.message + ' — is a bundle deployed? Try: gtc op deploy --bundle <file>';
-        r.appendChild(b); scroll();
+        b.textContent = '⚠️ ' + e.message; r.appendChild(b); scroll();
       }
     }
 
@@ -103,7 +127,10 @@
       send({ text });
     });
 
-    window.GreenticGUI.init().then(() => { input.focus(); });
+    // Render the entry flow's first card (the welcome menu) on load, with no
+    // user bubble — an empty payload starts the flow at its entry node.
+    send({});
+    input.focus();
   </script>
 </body>
 </html>
