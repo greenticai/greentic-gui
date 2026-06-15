@@ -853,6 +853,7 @@ mod tests {
             signatures: PackSignatures::default(),
             bootstrap: None,
             extensions: None,
+            agents: std::collections::BTreeMap::new(),
         };
         let file = std::fs::File::create(manifest_path).unwrap();
         ciborium::ser::into_writer(&manifest, file).unwrap();
@@ -882,6 +883,7 @@ mod tests {
             signatures: PackSignatures::default(),
             bootstrap: None,
             extensions: None,
+            agents: std::collections::BTreeMap::new(),
         };
         let file = std::fs::File::create(manifest_path).unwrap();
         ciborium::ser::into_writer(&manifest, file).unwrap();
