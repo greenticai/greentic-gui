@@ -424,12 +424,18 @@ pub async fn post_worker_message(
     State(state): State<AppState>,
     Json(body): Json<WorkerMessageRequest>,
 ) -> impl IntoResponse {
-    let tenant_ctx = build_tenant_ctx(
+    let mut tenant_ctx = build_tenant_ctx(
         &state.config.env_id,
         &state.config.default_tenant,
         Some(&state.config.default_team),
         body.context.user_id.as_deref(),
     );
+    // Forward the caller's session id so the runtime keys flow pause/resume
+    // (and revision stickiness) on it — without it every turn starts a fresh
+    // session, so a paused menu never resumes and card buttons never navigate.
+    if let Some(session_id) = body.context.session_id.as_deref() {
+        tenant_ctx = tenant_ctx.with_session(session_id);
+    }
     match state
         .worker_host
         .invoke_worker(tenant_ctx, &body.worker_id, body.payload)

@@ -142,11 +142,13 @@ pub fn router(state: AppState) -> Router {
         .route("/api/gui/cache/clear", post(api::clear_cache))
         .route("/api/gui/packs/reload", post(reload_packs))
         .route("/api/gui/session", post(api::issue_session))
-        .route("/auth/:provider/start", get(auth::start_auth))
-        .route("/auth/:provider/callback", get(auth::auth_callback))
+        .route("/auth/{provider}/start", get(auth::start_auth))
+        .route("/auth/{provider}/callback", get(auth::auth_callback))
         .route("/auth/logout", get(auth::logout))
         .route("/tests/sdk-harness", get(serve_sdk_harness))
-        .route("/*path", get(serve_route));
+        .route("/chat", get(serve_chat))
+        .route("/adaptivecards.min.js", get(serve_adaptivecards))
+        .route("/{*path}", get(serve_route));
 
     if state.config.enable_cors {
         use tower_http::cors::{Any, CorsLayer};
@@ -277,6 +279,34 @@ async fn serve_sdk_harness() -> impl IntoResponse {
         Ok(html) => Html(html).into_response(),
         Err(_) => (StatusCode::NOT_FOUND, "not found").into_response(),
     }
+}
+
+/// Built-in chat console: a minimal page that drives the GUI worker gateway
+/// (`/api/gui/worker/message`) and renders text + Adaptive Card replies. Lets
+/// `/chat` console page and its renderer, embedded so the installed binary
+/// serves them from any working directory (cargo-binstall ships only the
+/// binary, not `assets/`). A file under `assets/` still wins when present, so
+/// local edits don't need a rebuild — mirroring [`api::serve_sdk`].
+const EMBEDDED_CHAT_HTML: &str = include_str!("../assets/chat.html");
+const EMBEDDED_ADAPTIVECARDS_JS: &str = include_str!("../assets/adaptivecards.min.js");
+
+/// greentic-gui chat against a new-model runtime out of the box (set
+/// `WORKER_GATEWAY_URL` to the runtime) without authoring a tenant GUI pack.
+async fn serve_chat() -> impl IntoResponse {
+    let html = fs::read_to_string("assets/chat.html")
+        .await
+        .unwrap_or_else(|_| EMBEDDED_CHAT_HTML.to_string());
+    Html(html).into_response()
+}
+
+/// Serve the vendored Adaptive Cards renderer used by the built-in `/chat`
+/// console. Kept as an explicit route (rather than a generic static dir) so the
+/// GUI's deny-by-default asset surface stays small.
+async fn serve_adaptivecards() -> impl IntoResponse {
+    let js = fs::read_to_string("assets/adaptivecards.min.js")
+        .await
+        .unwrap_or_else(|_| EMBEDDED_ADAPTIVECARDS_JS.to_string());
+    ([(header::CONTENT_TYPE, "application/javascript")], js).into_response()
 }
 
 /// Force reload of tenant packs by clearing cache and reloading default tenant.
